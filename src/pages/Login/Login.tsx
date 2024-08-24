@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { jwtDecode } from "jwt-decode";
-import { FieldValues } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Common/Logo";
 import SocialIcon from "../../components/Common/SocialIcon";
@@ -11,44 +12,36 @@ import { socialIcons } from "../../data/socialIcons";
 import { useLoginUserMutation } from "../../redux/features/users/userApi";
 import { setUser } from "../../redux/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  errorMessage,
-  loadingMessage,
-  successMessage,
-} from "../../utils/sonarToastMessage";
 import { ExtendedJwtPayload } from "../../types/global";
-import { useEffect } from "react";
+import { errorMessage, successMessage } from "../../utils/sonarToastMessage";
+import { MModal } from "../../components/Common/MModal";
+import LoginCredantials from "../../components/Common/LoginCredantials";
+import { Button } from "@material-tailwind/react";
 
 const Login = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const { token, user } = useAppSelector((state) => state.user);
   const [loginUser] = useLoginUserMutation();
   const dispatch = useAppDispatch();
+  const handleOpen = () => setOpen(!open);
 
-  // const defaultValues = {
-  //   email: "mdmahin1310@gmail.com",
-  //   password: "46348e35757",
-  // };
-
-  const onSubmit = async (data: FieldValues) => {
-    loadingMessage("Loading...", 2000);
-
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await loginUser(data).unwrap();
       const token = res?.data?.accessToken;
       const user = jwtDecode(token) as ExtendedJwtPayload;
 
-      dispatch(
-        setUser({
-          user: user,
-          token: token,
-        })
-      );
-
-      if (res.data.needsPasswordChange) {
-        navigate("/change-password");
+      if (res.data) {
+        dispatch(
+          setUser({
+            user: user,
+            token: token,
+          })
+        );
+        return navigate("/change-password");
       } else {
-        navigate(`/${user.role}/dashboard`);
+        navigate(`/${user?.role}/dashboard`);
       }
 
       successMessage("User login successfully", 5000);
@@ -92,6 +85,23 @@ const Login = () => {
               </div>
             </div>
           </Form>
+          <div>
+            <Button
+              placeholder={""}
+              fullWidth
+              className="mt-2"
+              onClick={handleOpen}
+            >
+              Show Dummy Credentials
+            </Button>
+            <MModal
+              handleOpen={handleOpen}
+              open={open}
+              modalTitle="Dummy Credentials"
+            >
+              <LoginCredantials />
+            </MModal>
+          </div>
 
           <div>
             <p className="text-center py-5 text-gray-600">Forgot Password?</p>

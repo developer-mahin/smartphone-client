@@ -15,7 +15,7 @@ type TCreateVariantContant = {
 const CreateVariantContant = ({ handleOpen }: TCreateVariantContant) => {
   const { product } = useAppSelector((state) => state.product);
   const { handleSubmit, register, reset } = useForm();
-  const { user } = useAppSelector((state): TUserState => state.user);
+  const { user } = useAppSelector((state): TUserState => state?.user);
   const [createProduct] = useCreateProductMutation();
 
   const {

@@ -113,7 +113,7 @@ const CreateSeller = () => {
       </div>
 
       <Button placeholder={""} type="submit" className="mt-4">
-        Create Mange
+        Create Seller
       </Button>
     </Form>
   );

@@ -28,7 +28,6 @@ const ProductsList = () => {
     search,
   } = useAppSelector((state) => state.product);
 
-
   const query = {
     price,
     release_date,
