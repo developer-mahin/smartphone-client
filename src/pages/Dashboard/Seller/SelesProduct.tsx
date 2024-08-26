@@ -70,12 +70,12 @@ const SelesProduct = () => {
           const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
           return (
-            <tr key={product._id}>
+            <tr key={product?._id}>
               <td className={classes}>
                 <div className="flex items-center gap-3">
                   <img
                     className="size-20"
-                    src={productId.product_image}
+                    src={productId?.product_image}
                     alt=""
                   />
                   <div className="flex flex-col">
@@ -85,7 +85,7 @@ const SelesProduct = () => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      Name : {productId.product_name}
+                      Name : {productId?.product_name}
                     </Typography>
                     <Typography
                       placeholder={""}
@@ -93,7 +93,7 @@ const SelesProduct = () => {
                       color="blue-gray"
                       className="font-normal opacity-70"
                     >
-                      Brand: {productId.brand}
+                      Brand: {productId?.brand}
                     </Typography>
                     <Typography
                       placeholder={""}
@@ -101,7 +101,7 @@ const SelesProduct = () => {
                       color="blue-gray"
                       className="font-normal opacity-70"
                     >
-                      Release Date: {productId.release_date}
+                      Release Date: {productId?.release_date}
                     </Typography>
                   </div>
                 </div>
@@ -114,7 +114,7 @@ const SelesProduct = () => {
                     color="blue-gray"
                     className="font-normal"
                   >
-                    Model: {productId.model}
+                    Model: {productId?.model}
                   </Typography>
                   <Typography
                     placeholder={""}
@@ -122,7 +122,7 @@ const SelesProduct = () => {
                     color="blue-gray"
                     className="font-normal opacity-70"
                   >
-                    Operating System : {productId.operating_system}
+                    Operating System : {productId?.operating_system}
                   </Typography>
                   <Typography
                     placeholder={""}
@@ -130,7 +130,7 @@ const SelesProduct = () => {
                     color="blue-gray"
                     className="font-normal opacity-70"
                   >
-                    Ram : {productId.ram}
+                    Ram : {productId?.ram}
                   </Typography>
                 </div>
               </td>
